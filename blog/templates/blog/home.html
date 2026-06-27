@@ -6,11 +6,35 @@
 
 {% for post in posts %}
 
+<hr>
+
     <h3>
         <a href="{% url 'post_detail' post.slug %}">
             {{ post.title }}
         </a>
     </h3>
+
+<p>
+    {{post.content|truncatechars:150}}
+</p>
+<a href="{% url 'post_detail' post.slug %}">
+    Read More...
+</a>
+
+<p>
+    Author:{{post.author}}
+</p>
+
+<p>
+    published:
+    {{post.created_at|date:"Y/m/d"}}
+</p>
+
+{%empty%}
+
+<p>
+    No posts yet.
+</p>
 
 {% endfor %}
 
