@@ -18,6 +18,54 @@
     {{ post.content }}
 </p>
 
+<hr>
+
+<!-- Comment Form -->
+
+<h3>Leave a Comment</h3>
+
+<form method="post">
+
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">
+        Submit
+    </button>
+
+</form>
+
+<hr>
+
+<!-- Comments -->
+
+<h3>Comments</h3>
+
+{% for comment in post.comments.all %}
+
+    {% if comment.is_approved %}
+
+        <p>
+
+            <strong>{{ comment.author }}</strong>
+
+            <br>
+
+            {{ comment.body }}
+
+        </p>
+
+        <hr>
+
+    {% endif %}
+
+{% empty %}
+
+    <p>No comments yet.</p>
+
+{% endfor %}
+
 <p>
     <strong>Category:</strong>
     {{ post.category }}
