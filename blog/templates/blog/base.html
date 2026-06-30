@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html dir="rtl">
 
 <head>
     <title>My Blog</title>
@@ -30,9 +30,9 @@
 
     {% else %}
 
-        <a href="{% url 'login' %}">
-            Login
-        </a>
+        <a href="{% url 'login' %}">Login</a>
+|
+        <a href="{% url 'register' %}">Register</a>
 
     {% endif %}
 
@@ -40,6 +40,20 @@
 
 <hr>
 
+
+{% if messages %}
+
+    {% for message in messages %}
+
+        <p>
+
+            {{ message }}
+
+        </p>
+
+    {% endfor %}
+
+{% endif %}
 
 
     {% block content %}

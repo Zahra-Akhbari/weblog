@@ -24,6 +24,8 @@
 
 <h3>Leave a Comment</h3>
 
+{% if user.is_authenticated %}
+
 <form method="post">
 
     {% csrf_token %}
@@ -35,6 +37,15 @@
     </button>
 
 </form>
+
+{% else %}
+
+        <p>
+            Please <a href="{% url 'login' %}">login</a> to leave a comment.
+        </p>
+
+{% endif %}
+
 
 <hr>
 
