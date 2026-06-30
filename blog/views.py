@@ -9,6 +9,8 @@ from django.core.paginator import Paginator
 from .forms import RegisterForm
 
 from .models import Post
+from .models import Category
+
 
 from .forms import CommentForm
 
@@ -120,3 +122,22 @@ def register(request):
         context,
     )
 
+def category_posts(request, slug):
+
+    category = get_object_or_404(Category,slug=slug)
+
+    posts = Post.objects.filter(
+        category=category,
+        status="published"
+    )
+
+    context = {
+        "category": category,
+        "posts": posts,
+    }
+
+    return render(
+        request,
+        "blog/category_posts.html",
+        context
+    )

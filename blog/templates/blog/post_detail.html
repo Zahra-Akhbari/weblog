@@ -79,7 +79,8 @@
 
 <p>
     <strong>Category:</strong>
-    {{ post.category }}
+    <a href="{% url 'category_posts' post.category.slug %}">
+    {{ post.category.name }}</a>
 </p>
 
 <p>
