@@ -2,6 +2,14 @@
 
 {% block content %}
 
+<!--image-->
+{% if post.image %}
+
+    <img src="{{ post.image.url }}" width="500">
+
+{% endif %}
+
+
 <h2>{{ post.title }}</h2>
 
 <p>
@@ -87,9 +95,15 @@
     <strong>Tags:</strong>
 
     {% for tag in post.tags.all %}
+
+    <a href="{% url 'tag_posts' tag.slug %}">
         {{ tag.name }}
+    </a>
+
     {% empty %}
-        No tags
+
+      No tags
+
     {% endfor %}
 
 </p>

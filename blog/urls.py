@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home,post_detail
+from .views import home, post_detail, Tag_posts
 from django.contrib.auth import views as auth_views
 from .views import register
 from .views import category_posts
@@ -10,7 +10,7 @@ urlpatterns = [
     path("logout/",auth_views.LogoutView.as_view(),name="logout"),
     path("register/",register, name="register"),
     path("category/<slug:slug>/",category_posts,name="category_posts"),
-
+    path("tag/<slug:slug>/",Tag_posts,name="tag_posts"),
     path('posts/<slug:slug>/', post_detail, name='post_detail'),
 
 ]

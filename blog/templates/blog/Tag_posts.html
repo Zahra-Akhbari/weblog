@@ -1,0 +1,29 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+<h2>Tag: {{ tag.name }}</h2>
+
+<hr>
+
+{% for post in posts %}
+
+    <h3>
+        <a href="{% url 'post_detail' post.slug %}">
+            {{ post.title }}
+        </a>
+    </h3>
+
+    <p>
+        {{ post.content|truncatechars:120 }}
+    </p>
+
+    <hr>
+
+{% empty %}
+
+    <p>No Tags found.</p>
+
+{% endfor %}
+
+{% endblock %}

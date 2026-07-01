@@ -10,7 +10,7 @@ from .forms import RegisterForm
 
 from .models import Post
 from .models import Category
-
+from .models import Tag
 
 from .forms import CommentForm
 
@@ -139,5 +139,25 @@ def category_posts(request, slug):
     return render(
         request,
         "blog/category_posts.html",
+        context
+    )
+
+def Tag_posts(request, slug):
+
+    tag = get_object_or_404(Tag,slug=slug)
+
+    posts = Post.objects.filter(
+        tags=tag,
+        status="published"
+    )
+
+    context = {
+        "tag": tag,
+        "posts": posts,
+    }
+
+    return render(
+        request,
+        "blog/Tag_posts.html",
         context
     )
