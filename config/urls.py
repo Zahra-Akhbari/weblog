@@ -1,3 +1,6 @@
+
+from django.conf import settings
+from django.conf.urls.static import static
 """
 URL configuration for config project.
 
@@ -24,9 +27,6 @@ urlpatterns = [
 
 ]
 
-
-from django.conf import settings
-from django.conf.urls.static import static
 
 if settings.DEBUG:
     urlpatterns += static(

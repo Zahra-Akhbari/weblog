@@ -14,17 +14,18 @@
     </button>
 </form>
 
-{% if post.image %}
-
-    <img src="{{ post.image.url }}" width="300">
-
-{% endif %}
 
 <h2>Posts</h2>
 
 {% for post in page_obj %}
 
 <hr>
+
+    {% if post.image %}
+
+    <img src="{{ post.image.url }}" width="300">
+
+    {% endif %}
 
     <h3>
         <a href="{% url 'post_detail' post.slug %}">
