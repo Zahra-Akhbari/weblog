@@ -1,9 +1,9 @@
 {% extends 'blog/base.html' %}
 
-
 {% block content %}
 
-<form method="get" action="{% url 'home' %}">
+<form method="get" action="{% url 'home' %}" class="mb-4">
+
     <input
         type="text"
         name="q"
@@ -12,86 +12,133 @@
     <button type="submit">
         Search
     </button>
+
 </form>
 
 
-<h2>Posts</h2>
+<div class="row">
 
-{% for post in page_obj %}
+    <!-- Posts -->
+    <div class="col-lg-8">
 
-<hr>
+        {% for post in page_obj %}
 
-    <div class="card mb-4">
+        <div class="card mb-4">
 
-    {% if post.image %}
-        <img src="{{ post.image.url }}"
-             class="card-img-top"
-             alt="{{ post.title }}"
-             style="height:250px; object-fit:cover;">
-    {% endif %}
+            {% if post.image %}
 
-    <div class="card-body">
+                <img src="{{ post.image.url }}"
+                     class="card-img-top"
+                     alt="{{ post.title }}"
+                     style="height:250px; object-fit:cover;">
 
-        <h3 class="card-title">
-            {{ post.title }}
-        </h3>
+            {% endif %}
 
-        <p class="text-muted">
-            By {{ post.author }}
-            |
-            {{ post.created_at|date:"M d, Y" }}
-        </p>
+            <div class="card-body">
 
-        <p class="card-text">
-            {{ post.content|truncatechars:150 }}
-        </p>
+                <h3 class="card-title">
+                    {{ post.title }}
+                </h3>
 
-        <a href="{% url 'post_detail' post.slug %}"
-           class="btn btn-primary">
+                <p class="text-muted">
 
-            Read More
+                    By {{ post.author }}
 
-        </a>
+                    |
+
+                    {{ post.created_at|date:"M d, Y" }}
+
+                </p>
+
+                <p class="card-text">
+
+                    {{ post.content|truncatechars:50 }}
+
+                </p>
+
+                <a href="{% url 'post_detail' post.slug %}"
+                   class="btn btn-primary">
+
+                    Read More
+
+                </a>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+            <p>No posts yet.</p>
+
+        {% endfor %}
+
+    </div>
+
+
+    <!-- Sidebar -->
+    <div class="col-lg-4">
+
+        <div class="card">
+
+            <div class="card-header">
+
+                Categories
+
+            </div>
+
+            <div class="card-body">
+
+                Coming Soon...
+
+            </div>
+
+        </div>
 
     </div>
 
 </div>
 
-{%empty%}
-
-<p>
-    No posts yet.
-</p>
-
-{% endfor %}
-
-{% endblock %}
-
 
 <hr>
 
-{% if page_obj.has_previous %}
 
-<a href="?page={{ page_obj.previous_page_number }}">
-    Previous
-</a>
+<div class="d-flex justify-content-between">
 
-{% endif %}
+    {% if page_obj.has_previous %}
 
-<span>
+        <a href="?page={{ page_obj.previous_page_number }}"
+           class="btn btn-outline-primary">
 
-Page {{ page_obj.number }}
+            Previous
 
-of
+        </a>
 
-{{ page_obj.paginator.num_pages }}
+    {% endif %}
 
-</span>
 
-{% if page_obj.has_next %}
+    <span class="align-self-center">
 
-<a href="?page={{ page_obj.next_page_number }}">
-    Next
-</a>
+        Page {{ page_obj.number }}
 
-{% endif %}
+        of
+
+        {{ page_obj.paginator.num_pages }}
+
+    </span>
+
+
+    {% if page_obj.has_next %}
+
+        <a href="?page={{ page_obj.next_page_number }}"
+           class="btn btn-outline-primary">
+
+            Next
+
+        </a>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

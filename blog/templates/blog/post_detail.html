@@ -5,26 +5,31 @@
 <!--image-->
 {% if post.image %}
 
-    <img src="{{ post.image.url }}" width="500">
+    <img src="{{ post.image.url }}"
+     class="img-fluid rounded mb-100"
+     alt="{{ post.title }}">
 
 {% endif %}
 
 
-<h2>{{ post.title }}</h2>
+<h1 class="mb-3">
+    {{ post.title }}
+</h1>
 
-<p>
-    <strong>Author:</strong> {{ post.author }}
+<p class="text-muted">
+    By <strong>{{ post.author }}</strong>
+
+    |
+
+    {{ post.created_at|date:"F d, Y" }}
 </p>
 
-<p>
-    <strong>Date:</strong> {{ post.created_at|date:"Y/m/d" }}
-</p>
 
-<hr>
+<div class="fs-5">
 
-<p>
-    {{ post.content }}
-</p>
+    {{ post.content|linebreaks }}
+
+</div>
 
 <hr>
 
