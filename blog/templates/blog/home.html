@@ -21,33 +21,41 @@
 
 <hr>
 
+    <div class="card mb-4">
+
     {% if post.image %}
-
-    <img src="{{ post.image.url }}" width="300">
-
+        <img src="{{ post.image.url }}"
+             class="card-img-top"
+             alt="{{ post.title }}"
+             style="height:250px; object-fit:cover;">
     {% endif %}
 
-    <h3>
-        <a href="{% url 'post_detail' post.slug %}">
+    <div class="card-body">
+
+        <h3 class="card-title">
             {{ post.title }}
+        </h3>
+
+        <p class="text-muted">
+            By {{ post.author }}
+            |
+            {{ post.created_at|date:"M d, Y" }}
+        </p>
+
+        <p class="card-text">
+            {{ post.content|truncatechars:150 }}
+        </p>
+
+        <a href="{% url 'post_detail' post.slug %}"
+           class="btn btn-primary">
+
+            Read More
+
         </a>
-    </h3>
 
-<p>
-    {{post.content|truncatechars:150}}
-</p>
-<a href="{% url 'post_detail' post.slug %}">
-    Read More...
-</a>
+    </div>
 
-<p>
-    Author:{{post.author}}
-</p>
-
-<p>
-    published:
-    {{post.created_at|date:"Y/m/d"}}
-</p>
+</div>
 
 {%empty%}
 
