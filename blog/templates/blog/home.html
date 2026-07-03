@@ -2,7 +2,6 @@
 
 {% block content %}
 
-
 <div class="row">
 
     <!-- Posts -->
@@ -10,24 +9,27 @@
 
         {% for post in page_obj %}
 
-        <div class="card mb-4">
+        <div class="card shadow-sm mb-4">
 
             {% if post.image %}
 
-                <img src="{{ post.image.url }}"
-                     class="card-img-top"
-                     alt="{{ post.title }}"
-                     style="height:250px; object-fit:cover;">
+                <img
+                    src="{{ post.image.url }}"
+                    class="card-img-top"
+                    alt="{{ post.title }}"
+                    style="height:250px; object-fit:cover;">
 
             {% endif %}
 
             <div class="card-body">
 
                 <h3 class="card-title">
+
                     {{ post.title }}
+
                 </h3>
 
-                <p class="text-muted">
+                <p class="text-muted mb-2">
 
                     By {{ post.author }}
 
@@ -39,14 +41,14 @@
 
                 <p class="card-text">
 
-                    {{ post.content|truncatechars:50 }}
+                    {{ post.content|truncatechars:120 }}
 
                 </p>
 
                 <a href="{% url 'post_detail' post.slug %}"
                    class="btn btn-primary">
 
-                    Read More...
+                    Read More
 
                 </a>
 
@@ -56,44 +58,9 @@
 
         {% empty %}
 
-            <p>No posts yet.</p>
+            <div class="alert alert-info">
 
-        {% endfor %}
-
-    </div>
-
-
-    <!-- Sidebar -->
-    <div class="col-lg-4">
-<!--    categories-->
-    <div class="card mb-4">
-
-        <div class="card-header">
-
-        Categories
-
-        </div>
-
-    <div class="list-group list-group-flush">
-
-        {% for category in categories %}
-
-            <a href="{% url 'category_posts' category.slug %}"
-               class="list-group-item list-group-item-action">
-
-                {{ category.name }}
-
-                <span class="badge bg-secondary float-end">
-                    {{ category.post_count }}
-                </span>
-
-            </a>
-
-        {% empty %}
-
-            <div class="list-group-item">
-
-                No categories
+                No posts yet.
 
             </div>
 
@@ -101,78 +68,142 @@
 
     </div>
 
-    <div class="card mb-4">
-<!--    latest posts card -->
-    <div class="card-header">
-        Latest Posts
-    </div>
+    <!-- Sidebar -->
+    <div class="col-lg-4">
 
-    <div class="list-group list-group-flush">
+        <!-- Categories -->
 
-        {% for latest in latest_posts %}
+        <div class="card mb-4 shadow-sm">
 
-            <a href="{% url 'post_detail' latest.slug %}"
-               class="list-group-item list-group-item-action">
+            <div class="card-header">
 
-                {{ latest.title }}
+                Categories
 
-            </a>
+            </div>
 
-        {% endfor %}
+            <div class="list-group list-group-flush">
+
+                {% for category in categories %}
+
+                    <a
+                        href="{% url 'category_posts' category.slug %}"
+                        class="list-group-item list-group-item-action">
+
+                        {{ category.name }}
+
+                    </a>
+
+                {% empty %}
+
+                    <div class="list-group-item">
+
+                        No Categories
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        <!-- Latest Posts -->
+
+        <div class="card mb-4 shadow-sm">
+
+            <div class="card-header">
+
+                Latest Posts
+
+            </div>
+
+            <div class="list-group list-group-flush">
+
+                {% for latest in latest_posts %}
+
+                    <a
+                        href="{% url 'post_detail' latest.slug %}"
+                        class="list-group-item list-group-item-action">
+
+                        {{ latest.title }}
+
+                    </a>
+
+                {% empty %}
+
+                    <div class="list-group-item">
+
+                        No Posts
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        <!-- Tags -->
+
+        <div class="card shadow-sm">
+
+            <div class="card-header">
+
+                Tags
+
+            </div>
+
+            <div class="card-body">
+
+                {% for tag in tags %}
+
+                    <a
+                        href="{% url 'tag_posts' tag.slug %}"
+                        class="badge bg-primary text-decoration-none mb-2">
+
+                        {{ tag.name }}
+
+                    </a>
+
+                {% empty %}
+
+                    <span class="text-muted">
+
+                        No Tags
+
+                    </span>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
 
     </div>
 
 </div>
-
-    <div class="card">
-
-    <div class="card-header">
-        Tags
-    </div>
-
-    <div class="card-body">
-
-        {% for tag in tags %}
-
-            <a href="{% url 'tag_posts' tag.slug %}"
-               class="badge bg-primary text-decoration-none">
-
-                {{ tag.name }}
-
-            </a>
-
-        {% empty %}
-
-            No Tags
-
-        {% endfor %}
-
-    </div>
-
-</div>
-
-    </div>
-
-    </div>
 
 <hr>
 
-    <!--pagiation-->
-<div class="d-flex justify-content-between">
+<div class="d-flex justify-content-between align-items-center">
 
     {% if page_obj.has_previous %}
 
-        <a href="?page={{ page_obj.previous_page_number }}"
-           class="btn btn-outline-primary">
+        <a
+            href="?page={{ page_obj.previous_page_number }}"
+            class="btn btn-outline-primary">
 
             Previous
 
         </a>
 
+    {% else %}
+
+        <span></span>
+
     {% endif %}
 
-
-    <span class="align-self-center">
+    <strong>
 
         Page {{ page_obj.number }}
 
@@ -180,17 +211,21 @@
 
         {{ page_obj.paginator.num_pages }}
 
-    </span>
-
+    </strong>
 
     {% if page_obj.has_next %}
 
-        <a href="?page={{ page_obj.next_page_number }}"
-           class="btn btn-outline-primary">
+        <a
+            href="?page={{ page_obj.next_page_number }}"
+            class="btn btn-outline-primary">
 
             Next
 
         </a>
+
+    {% else %}
+
+        <span></span>
 
     {% endif %}
 
