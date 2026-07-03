@@ -40,6 +40,29 @@
 
             <ul class="navbar-nav me-auto">
 
+                <form class="d-flex ms-3"
+      method="get"
+      action="{% url 'home' %}">
+
+    <input
+    class="form-control me-2"
+    type="search"
+    name="q"
+    value="{{ request.GET.q }}"
+    placeholder="Search posts...">
+
+    <button
+        class="btn btn-outline-light"
+        type="submit">
+
+        Search
+
+    </button>
+
+</form>
+
+
+
                 <li class="nav-item">
 
                     <a class="nav-link"
