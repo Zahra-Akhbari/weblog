@@ -2,18 +2,91 @@
 
 {% block content %}
 
-<h2>Login</h2>
+<div class="row justify-content-center">
 
-<form method="post">
+    <div class="col-md-6 col-lg-5">
 
-    {% csrf_token %}
+        <div class="card shadow">
 
-    {{ form.as_p }}
+            <div class="card-header text-center">
 
-    <button type="submit">
-        Login
-    </button>
+                <h3>Login</h3>
 
-</form>
+            </div>
+
+
+
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+
+            <div class="card-body">
+
+
+                <form method="post">
+
+                    {% csrf_token %}
+
+                    {% for field in form %}
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            {{ field.label }}
+                        </label>
+
+                        {{ field }}
+
+                        {% if field.errors %}
+
+                            <div class="text-danger small mt-1">
+                                {{ field.errors }}
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                    {% endfor %}
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary w-100">
+
+                        Login
+
+                    </button>
+
+                    <div class="text-center mt-3">
+
+                        <small class="text-muted">
+
+                            Don't have an account?
+
+                        </small>
+
+                        <br>
+
+                        <a href="{% url 'register' %}"
+                        class="text-decoration-none">
+
+                            Sign Up
+
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
 {% endblock %}

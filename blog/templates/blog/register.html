@@ -2,20 +2,51 @@
 
 {% block content %}
 
+
 <h2>Register</h2>
+<hr>
 
 <form method="post">
 
     {% csrf_token %}
 
-    {{ form.as_p }}
+    {% for field in form %}
 
-    <button type="submit">
+
+
+    <div class="mb-3 ">
+
+        <label class="form-label">
+
+            {{ field.label }}
+
+        </label>
+
+        {{ field }}
+
+        {% if field.errors %}
+
+            <div class="text-danger small mt-1">
+
+                {{ field.errors }}
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+{% endfor %}
+
+    <button class="btn btn-primary w-100" type="submit">
 
         Register
 
     </button>
 
+
 </form>
+
+
 
 {% endblock %}

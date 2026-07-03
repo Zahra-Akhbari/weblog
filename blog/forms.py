@@ -10,6 +10,7 @@ class CommentForm(forms.ModelForm):
 
 
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 
 class RegisterForm(UserCreationForm):
@@ -27,6 +28,30 @@ class RegisterForm(UserCreationForm):
             "password2",
         ]
 
+    def __init__(self, *args, **kwargs):
+
+        super().__init__(*args, **kwargs)
+
+        for field in self.fields.values():
+            field.widget.attrs["class"] = "form-control"
+
+
+
+            placeholders = {
+                "username": "Enter your username",
+                "email": "Enter your email",
+                "password1": "Enter password",
+                "password2": "Repeat password",
+            }
+
+            for name, field in self.fields.items():
+                field.widget.attrs["class"] = "form-control"
+
+                field.widget.attrs["placeholder"] = placeholders.get(name,"")
+
+
+
+
     def clean_email(self):
         # ایمیلی که کاربر وارد کرده و قبلاً اعتبارسنجی اولیه شده را بردار بریز تو دیکشنری
         email = self.cleaned_data["email"]
@@ -37,3 +62,21 @@ class RegisterForm(UserCreationForm):
             )
 
         return email
+
+
+
+class LoginForm(AuthenticationForm):
+
+    def __init__(self, *args, **kwargs):
+
+        super().__init__(*args, **kwargs)
+
+        self.fields["username"].widget.attrs.update({
+            "class": "form-control",
+            "placeholder": "Username"
+        })
+
+        self.fields["password"].widget.attrs.update({
+            "class": "form-control",
+            "placeholder": "Password"
+        })
