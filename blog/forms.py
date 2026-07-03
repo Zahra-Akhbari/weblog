@@ -80,3 +80,26 @@ class LoginForm(AuthenticationForm):
             "class": "form-control",
             "placeholder": "Password"
         })
+
+
+class CommentForm(forms.ModelForm):
+
+    class Meta:
+
+        model = Comment
+
+        fields = ["body"]
+
+    def __init__(self, *args, **kwargs):
+
+        super().__init__(*args, **kwargs)
+
+        self.fields["body"].widget.attrs.update({
+
+            "class": "form-control",
+
+            "rows": 4,
+
+            "placeholder": "Write your comment..."
+
+        })
