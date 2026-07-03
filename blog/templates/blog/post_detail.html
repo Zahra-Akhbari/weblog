@@ -173,7 +173,7 @@
 
 <p>
     <strong>Category:</strong>
-    <a href="{% url 'category_posts' post.category.slug %}">
+    <a href="{% url 'category_posts' post.category.slug %}" class="text-decoration-none">
     {{ post.category.name }}</a>
 </p>
 
@@ -182,7 +182,7 @@
 
     {% for tag in post.tags.all %}
 
-    <a href="{% url 'tag_posts' tag.slug %}">
+    <a href="{% url 'tag_posts' tag.slug %}" class="text-decoration-none">
         {{ tag.name }}
     </a>
 

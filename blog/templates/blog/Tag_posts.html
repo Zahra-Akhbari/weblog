@@ -2,14 +2,14 @@
 
 {% block content %}
 
-<h2>Tag: {{ tag.name }}</h2>
+<h2 >Tag: {{ tag.name }}</h2>
 
 <hr>
 
 {% for post in posts %}
 
     <h3>
-        <a href="{% url 'post_detail' post.slug %}">
+        <a href="{% url 'post_detail' post.slug %}" class="text-decoration-none">
             {{ post.title }}
         </a>
     </h3>
