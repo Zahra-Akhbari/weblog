@@ -222,3 +222,41 @@ def dashboard(request):
         "blog/dashboard.html",
         context
     )
+
+
+@login_required
+def update_post(request, slug):
+
+    post = get_object_or_404(
+        Post,
+        slug=slug,
+        author=request.user
+    )
+
+    if request.method == "POST":
+
+        form = PostForm(
+            request.POST,request.FILES,
+            instance=post #فرم با اطلاعات قبلی پر میشه
+        )
+
+        if form.is_valid():
+
+            form.save()
+
+            return redirect("dashboard")
+
+    else:
+
+        form = PostForm(instance=post)
+
+    context = {
+        "form": form
+    }
+
+    return render(
+        request,
+        "blog/create_post.html",
+        context
+    )
+

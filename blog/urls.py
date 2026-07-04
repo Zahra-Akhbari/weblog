@@ -3,7 +3,7 @@ from django.urls import path
 from .views import home, post_detail, Tag_posts
 from django.contrib.auth import views as auth_views
 from .views import register
-from .views import category_posts ,dashboard
+from .views import category_posts ,dashboard,update_post
 
 urlpatterns = [
     path('home/', home, name='home'),
@@ -14,7 +14,7 @@ urlpatterns = [
     path("tag/<slug:slug>/",Tag_posts,name="tag_posts"),
     path("posts/create/", views.create_post, name="create_post"),
     path("posts/dashboard/", dashboard, name="dashboard"),
-
+    path("posts/<slug:slug>/update/",update_post,name="update_post"),
 
     path('posts/<slug:slug>/', post_detail, name='post_detail'),
 
