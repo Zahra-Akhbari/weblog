@@ -260,3 +260,23 @@ def update_post(request, slug):
         context
     )
 
+@login_required
+def delete_post(request, slug):
+
+    post = get_object_or_404(
+        Post,
+        slug=slug,
+        author=request.user
+    )
+
+    if request.method == "POST":
+
+        post.delete()
+
+        return redirect("dashboard")
+
+    return render(
+        request,
+        "blog/delete_post.html",
+        {"post": post}
+    )
