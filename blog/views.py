@@ -105,6 +105,12 @@ def register(request):
         if form.is_valid():
 
             user = form.save()
+
+            messages.success(
+                request,
+                "Registration completed successfully."
+            )
+
             # همین الآن کاربر را Login کن.
             login(request, user)
 
@@ -184,6 +190,12 @@ def create_post(request):
 
             post.save()
 
+            messages.success(
+                request,
+                "Post created successfully."
+            )
+            # return redirect("dashboard")
+
             form.save_m2m()
 
             return redirect(
@@ -244,6 +256,11 @@ def update_post(request, slug):
 
             form.save()
 
+            messages.success(
+                request,
+                "Post updated successfully."
+            )
+
             return redirect("dashboard")
 
     else:
@@ -272,6 +289,11 @@ def delete_post(request, slug):
     if request.method == "POST":
 
         post.delete()
+
+        messages.success(
+            request,
+            "Post deleted successfully."
+        )
 
         return redirect("dashboard")
 
