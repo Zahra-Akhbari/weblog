@@ -3,10 +3,14 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
 from django.contrib import messages
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
+
+
 from django.core.paginator import Paginator
 
 from .forms import RegisterForm
+from .forms import PostForm
 
 from .models import Post
 from .models import Category
@@ -159,5 +163,62 @@ def Tag_posts(request, slug):
     return render(
         request,
         "blog/Tag_posts.html",
+        context
+    )
+
+@login_required
+def create_post(request):
+
+    if request.method == "POST":
+
+        form = PostForm(
+            request.POST,
+            request.FILES # برای ارسال تصویر است
+        )
+
+        if form.is_valid(): #اعتبارسنجی فرم
+
+            post = form.save(commit=False) #شیء Post ساخته می‌شود ولی هنوز در دیتابیس ذخیره نشده است
+
+            post.author = request.user #نویسنده را از کاربر لاگین‌شده می‌گیریم
+
+            post.save()
+
+            form.save_m2m()
+
+            return redirect(
+                "post_detail",
+                slug=post.slug
+            )
+
+    else:
+
+        form = PostForm()
+
+    context = {
+        "form": form
+    }
+
+    return render(
+        request,
+        "blog/create_post.html",
+        context
+    )
+
+
+@login_required
+def dashboard(request):
+
+    posts = Post.objects.filter(
+        author=request.user # هر نویسنده باید پست های خودش رو ببینه
+    ).order_by("-created_at")
+
+    context = {
+        "posts": posts
+    }
+
+    return render(
+        request,
+        "blog/dashboard.html",
         context
     )

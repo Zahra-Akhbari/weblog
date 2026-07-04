@@ -1,0 +1,37 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+
+<div class="card shadow-sm">
+
+    <div class="card-header">
+
+        Create New Post
+
+    </div>
+
+    <div class="card-body">
+
+        <form
+            method="post"
+            enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button
+                type="submit"
+                class="btn btn-success">
+
+                Publish
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

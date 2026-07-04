@@ -1,5 +1,6 @@
 from django import forms
 from .models import Comment
+from .models import Post
 
 from django.core.exceptions import ValidationError
 
@@ -103,3 +104,25 @@ class CommentForm(forms.ModelForm):
             "placeholder": "Write your comment..."
 
         })
+
+
+
+
+class PostForm(forms.ModelForm):
+
+    class Meta:
+        model = Post
+        fields = [
+            "title",
+            "category",
+            "tags",
+            "content",
+            "image",
+            "status",
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for field in self.fields.values():
+            field.widget.attrs["class"] = "form-control"

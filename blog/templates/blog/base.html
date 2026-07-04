@@ -90,15 +90,39 @@
 
                     </li>
 
+                <li class="nav-item me-3">
+
+                    <a href="{% url 'dashboard' %}"
+                       class="btn btn-outline-info">
+
+                        Dashboard
+
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item me-3">
+
+                    <a
+                        href="{% url 'create_post' %}"
+                        class="btn btn-outline-success me-5">
+
+                        New Post
+
+                    </a>
+
+                </li>
+
                     <li class="nav-item">
 
                         <form method="post"
-                              action="{% url 'logout' %}">
+                              action="{% url 'logout' %}"  class="d-inline">
 
                             {% csrf_token %}
 
                             <button
-                                class="btn btn-outline-light">
+                                class="btn btn-outline-light ">
 
                                 Logout
 
@@ -108,11 +132,13 @@
 
                     </li>
 
+
+
                 {% else %}
 
                     <li class="nav-item">
 
-                        <a class="nav-link"
+                        <a class="nav-link "
                            href="{% url 'login' %}">
 
                             Login
@@ -121,7 +147,7 @@
 
                     </li>
 
-                    <li class="nav-item">
+                    <li class="nav-item ">
 
                         <a class="btn btn-primary ms-1"
                            href="{% url 'register' %}">
